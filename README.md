@@ -3,10 +3,10 @@
 <!-- SHIELDS -->
 <img src="https://github.com/AnderMendoza/AnderMendoza/raw/main/assets/line-neon.gif" width="100%">
 <p align='center'> 
-  <img alt="GitHub Repo contributors" src="https://img.shields.io/github/contributors/ALX-13/El-Molino?style=for-the-badge">&nbsp;
-  <img alt="GitHub Repo forks" src="https://img.shields.io/github/forks/ALX-13/El-Molino?style=for-the-badge">&nbsp;
-  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/ALX-13/El-Molino?style=for-the-badge">&nbsp;
-  <img alt="GitHub Repo issues" src="https://img.shields.io/github/issues/ALX-13/El-Molino?style=for-the-badge">&nbsp;
+  <img alt="GitHub Repo contributors" src="https://img.shields.io/github/contributors/hexed-AAL1X/El-Molino?style=for-the-badge">&nbsp;
+  <img alt="GitHub Repo forks" src="https://img.shields.io/github/forks/hexed-AAL1X/El-Molino?style=for-the-badge">&nbsp;
+  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/hexed-AAL1X/El-Molino?style=for-the-badge">&nbsp;
+  <img alt="GitHub Repo issues" src="https://img.shields.io/github/issues/hexed-AAL1X/El-Molino?style=for-the-badge">&nbsp;
 </p>
 
 <!-- PROJECT LOGO -->
@@ -17,14 +17,14 @@
    <p align="center">
      An incredible visual and fun console GAME
      <br>
-     <a href="https://github.com/ALX-13/El-Molino"><strong>Explore the docs »</strong></a>
+     <a href="https://github.com/hexed-AAL1X/El-Molino"><strong>Explore the docs »</strong></a>
      <br>
      <br>
-     <a href="https://github.com/ALX-13/El-Molino">View Demo</a>
+     <a href="https://github.com/hexed-AAL1X/El-Molino">View Demo</a>
      ·
-     <a href="https://github.com/ALX-13/ALX-13/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+     <a href="https://github.com/hexed-AAL1X/hexed-AAL1X/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
      ·
-     <a href="https://github.com/ALX-13/ALX-13/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+     <a href="https://github.com/hexed-AAL1X/hexed-AAL1X/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
    </p>
 </div>
 
@@ -167,8 +167,8 @@ Don't forget to give the project a star! Thanks for contributing!
 <a id="contact"></a>***Contact***
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 <p align="center">
-  <a href="mailto:leonardobravoricapa@gmail.com"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white&color=black" /></a>
-  <a href="https://www.instagram.com/leonm.br"><img src="https://img.shields.io/badge/instagram-%2312100E.svg?&style=for-the-badge&logo=instagram&logoColor=white&color=black" /></a>
+  <a href="mailto:hexed_aal1x.ops@proton.me"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white&color=black" /></a>
+  <a href="https://www.instagram.com/hexed_aal1x"><img src="https://img.shields.io/badge/instagram-%2312100E.svg?&style=for-the-badge&logo=instagram&logoColor=white&color=black" /></a>
   <!-- <a href="https://aal1x-jobhub.github.io/jobhub-landing/"><img src="https://img.shields.io/badge/website-%23.svg?&style=for-the-badge&logo=www&logoColor=white&color=black" /></a> -->
   <a href="https://www.linkedin.com/in/leonardo-bravo-4120b8228/"><img src="https://img.shields.io/badge/linkedin-%2312100E.svg?&style=for-the-badge&logo=linkedin&logoColor=white&color=black" /></a>
 </p>
