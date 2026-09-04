@@ -3,10 +3,10 @@
 <!-- SHIELDS -->
 <img src="https://github.com/AnderMendoza/AnderMendoza/raw/main/assets/line-neon.gif" width="100%">
 <p align='center'> 
-  <img alt="GitHub Repo contributors" src="https://img.shields.io/github/contributors/ALX-13/El-Molino?style=for-the-badge">&nbsp;
-  <img alt="GitHub Repo forks" src="https://img.shields.io/github/forks/ALX-13/El-Molino?style=for-the-badge">&nbsp;
-  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/ALX-13/El-Molino?style=for-the-badge">&nbsp;
-  <img alt="GitHub Repo issues" src="https://img.shields.io/github/issues/ALX-13/El-Molino?style=for-the-badge">&nbsp;
+  <img alt="GitHub Repo contributors" src="https://img.shields.io/github/contributors/AAL1X/El_Molino-v1.0?style=for-the-badge">&nbsp;
+  <img alt="GitHub Repo forks" src="https://img.shields.io/github/forks/AAL1X/El_Molino-v1.0?style=for-the-badge">&nbsp;
+  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/AAL1X/El_Molino-v1.0?style=for-the-badge">&nbsp;
+  <img alt="GitHub Repo issues" src="https://img.shields.io/github/issues/AAL1X/El_Molino-v1.0?style=for-the-badge">&nbsp;
 </p>
 
 <!-- PROJECT LOGO -->
