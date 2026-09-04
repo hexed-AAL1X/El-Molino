@@ -8,8 +8,144 @@
 
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);  //  C�digo para usar colores
 
-//  Define
-#define color SetConsoleTextAttribute
+// ===== Framebuffer: pinta en memoria y vuelca la pantalla de una vez =====
+enum { SCR_W = 210, SCR_H = 49 };
+static CHAR_INFO gScr[SCR_H][SCR_W];
+static WORD gScrAttr = 7;
+static int gScrX = 1, gScrY = 1;
+static bool gScrOn = false;
+
+static bool scrIsMingwTerminal() {
+	return getenv("MSYSTEM") != NULL || getenv("MINGW_PREFIX") != NULL;
+}
+
+// Atributo Win32 (0-15) -> secuencia ANSI (mintty/Git Bash)
+static void scrApplyColor(WORD attr) {
+	if (scrIsMingwTerminal()) {
+		// Win: BGR bits 0=black,1=blue,2=green,3=cyan,4=red,5=mag,6=yel,7=white
+		static const int winToAnsi[8] = { 30, 34, 32, 36, 31, 35, 33, 37 };
+		int code = winToAnsi[attr & 7];
+		if (attr & 8) code += 60; // brillante 90-97
+		std::cout << "\033[" << code << "m";
+	}
+	else {
+		SetConsoleTextAttribute(hConsole, attr);
+	}
+}
+
+static void scrResizeConsole() {
+	COORD largest = GetLargestConsoleWindowSize(hConsole);
+	SHORT w = (SHORT)SCR_W;
+	SHORT h = (SHORT)SCR_H;
+	if (largest.X > 0 && largest.X < w) w = largest.X;
+	if (largest.Y > 0 && largest.Y < h) h = largest.Y;
+
+	SMALL_RECT tiny = { 0, 0, 1, 1 };
+	SetConsoleWindowInfo(hConsole, TRUE, &tiny);
+	COORD buf = { w, h };
+	SetConsoleScreenBufferSize(hConsole, buf);
+	SMALL_RECT win = { 0, 0, (SHORT)(w - 1), (SHORT)(h - 1) };
+	SetConsoleWindowInfo(hConsole, TRUE, &win);
+}
+
+static void color_impl(HANDLE h, int c) {
+	gScrAttr = (WORD)c;
+	if (!gScrOn) scrApplyColor((WORD)c);
+}
+#define color color_impl
+
+struct GameOut {
+	GameOut& operator<<(char ch) {
+		if (gScrOn) {
+			if (gScrX >= 1 && gScrX <= SCR_W && gScrY >= 1 && gScrY <= SCR_H) {
+				CHAR_INFO& cell = gScr[gScrY - 1][gScrX - 1];
+				cell.Char.AsciiChar = ch; // byte CP437 original (219, 220, 223, ...)
+				cell.Attributes = gScrAttr;
+			}
+		}
+		else {
+			std::cout.put(ch);
+		}
+		return *this;
+	}
+	GameOut& operator<<(const char* s) {
+		if (!s) return *this;
+		if (gScrOn) {
+			return (*this) << (char)(s[0] ? (unsigned char)s[0] : ' ');
+		}
+		while (*s) std::cout.put(*s++);
+		return *this;
+	}
+	GameOut& operator<<(std::ostream& (*manip)(std::ostream&)) {
+		if (!gScrOn) manip(std::cout);
+		return *this;
+	}
+};
+static GameOut gameOut;
+
+static void scrBeginFrame() {
+	gScrOn = true;
+	gScrAttr = 7;
+	for (int y = 0; y < SCR_H; ++y) {
+		for (int x = 0; x < SCR_W; ++x) {
+			gScr[y][x].Char.AsciiChar = ' ';
+			gScr[y][x].Attributes = 7;
+		}
+	}
+}
+
+static void scrFlushToCout() {
+	WORD prev = 0xFFFF;
+	if (!scrIsMingwTerminal()) {
+		COORD home = { 0, 0 };
+		SetConsoleCursorPosition(hConsole, home);
+	}
+	else {
+		std::cout << "\033[H"; // cursor al inicio (ANSI)
+	}
+	for (int y = 0; y < SCR_H; ++y) {
+		for (int x = 0; x < SCR_W; ++x) {
+			WORD a = gScr[y][x].Attributes;
+			if (a != prev) {
+				scrApplyColor(a);
+				prev = a;
+			}
+			std::cout.put(gScr[y][x].Char.AsciiChar);
+		}
+		std::cout.put('\n');
+	}
+	if (scrIsMingwTerminal()) std::cout << "\033[0m";
+	std::cout.flush();
+}
+
+static void scrEndFrame() {
+	gScrOn = false;
+
+	if (!scrIsMingwTerminal()) {
+		scrResizeConsole();
+		COORD bufSize = { (SHORT)SCR_W, (SHORT)SCR_H };
+		COORD bufCoord = { 0, 0 };
+		SMALL_RECT region = { 0, 0, (SHORT)(SCR_W - 1), (SHORT)(SCR_H - 1) };
+		if (WriteConsoleOutputA(hConsole, &gScr[0][0], bufSize, bufCoord, &region)) {
+			return;
+		}
+	}
+
+	// MinGW o si WriteConsoleOutput falla: volcado completo (ANSI en mintty)
+	if (scrIsMingwTerminal()) std::cout << "\033[2J\033[H";
+	else system("cls");
+	scrFlushToCout();
+}
+
+static void scrHideCursor() {
+	CONSOLE_CURSOR_INFO ci;
+	ci.dwSize = 1;
+	ci.bVisible = FALSE;
+	SetConsoleCursorInfo(hConsole, &ci);
+	if (scrIsMingwTerminal()) std::cout << "\033[?25l";
+}
+
+//  Define (color ya definido arriba como color_impl)
 
 //9.20
 //  Funciones
@@ -88,6 +224,7 @@ void ColorFichas(int& X, int& Y, short& contL);
 //  Fin Funciones
 
 using namespace std;  //  Using Namespace Est�ndar
+#define cout gameOut
 
 struct Tablero {
 	int Color;
@@ -106,6 +243,11 @@ typedef struct {
 }tUsuario;
 
 int main() {  //  Main ( Funci�n Principal )
+	ios_base::sync_with_stdio(false);
+	std::cin.tie(nullptr);
+	SetConsoleOutputCP(437);
+	SetConsoleCP(437);
+	scrHideCursor();
 	Molino_v9_20();
 	return 0;
 }
@@ -493,8 +635,9 @@ void Molino_v9_20() {
 	//  Controles de Opciones
 	do {
 		do {
-			system("cls");
+			scrBeginFrame();
 			Men�(x, y, YFlch, XFlch, Color, ColorL, Contr, cont, Nombre, contL, Turno, ColorD, R, ColorF, ColorFJ, Molino, ColorA);
+			scrEndFrame();
 			Beep(150, 200);
 
 			static const int KEYS_NAV[] = { TK_UP, TK_DOWN, TK_LEFT, TK_RIGHT, TK_ENTER, TK_ESC };
@@ -841,6 +984,8 @@ void Men�(int* x, int* y, int* YFlch, int* XFlch, short* Color, int* ColorL, s
 	for (Y = 1; Y <= *y; Y++) {
 
 		for (X = 1; X <= *x; X++) {
+			gScrX = X;
+			gScrY = Y;
 
 			color(hConsole, 3);  //  Color del Marco ( Azul )
 
