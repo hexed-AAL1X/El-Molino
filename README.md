@@ -157,9 +157,22 @@ Don't forget to give the project a star! Thanks for contributing!
 5. Open a pull request.
 
 <a id="top-contributors"></a>
-### Top contributors:
+### Top contributors
+
 <div align="center">
-  <a href="https://github.com/MichaelVL2023"><img src="https://avatars.githubusercontent.com/u/134979957?v=4" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 50%; border: 2px solid #000;"/></a>
+
+<table>
+  <tr>
+    <td align="center" width="160">
+      <a href="https://github.com/MichaelVL2023">
+        <img src="https://avatars.githubusercontent.com/u/134979957?v=4" width="88" height="88" alt="Michael Vásquez León" style="border-radius:50%;" /><br />
+        <b>Michael Vásquez León</b><br />
+        <sub>@MichaelVL2023</sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
 </div>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
