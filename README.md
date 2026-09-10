@@ -13,7 +13,7 @@
 <br>
 <div align="center">
    <img src="assets/images/logo.png" alt="Logo">
-   <h3 align="center">El-MOLINO-v6.6.6</h3>
+   <h3 align="center">El-MOLINO-v1.0.0</h3>
    <p align="center">
      An incredible visual and fun console GAME
      <br>
